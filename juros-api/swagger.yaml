@@ -1,0 +1,309 @@
+swagger: '2.0'
+info:
+  description: API com operações de Juros
+  version: 1.0.0
+  title: Juros API
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: Limites de Crédito
+    description: Limite Credito Resource
+paths:
+  /api/limites-creditos:
+    get:
+      tags:
+        - Limites de Crédito
+      summary: listar
+      description: Listar limites de créditos conforme parametros.
+      operationId: listarUsingGET
+      produces:
+        - '*/*'
+        - application/json;charset=UTF-8
+      parameters:
+        - name: limiteCredito
+          in: query
+          description: Limite de Crédito
+          required: false
+          type: number
+          x-example: 12.3
+        - name: nomeCliente
+          in: query
+          description: Nome do cliente
+          required: false
+          type: string
+          x-example: José da Silva
+        - name: risco
+          in: query
+          description: Risco de crédito
+          required: false
+          type: string
+          x-example: A
+          enum:
+            - A
+            - B
+            - C
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/LimiteCreditoResponse'
+        '204':
+          description: Dados não encontrados
+          schema:
+            $ref: '#/definitions/LimiteCreditoResponse'
+        '400':
+          description: Erro na requisição
+      deprecated: false
+    post:
+      tags:
+        - Limites de Crédito
+      summary: salvar
+      description: Adiciona um novo limite de crédito.
+      operationId: salvarUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+        - application/json;charset=UTF-8
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/LimiteCreditoPersist'
+      responses:
+        '201':
+          description: Entidade criada
+          schema:
+            $ref: '#/definitions/LimiteCreditoResponse'
+        '400':
+          description: Erro na requisição
+      deprecated: false
+  '/api/limites-creditos/{id}':
+    get:
+      tags:
+        - Limites de Crédito
+      summary: recuperar
+      description: Recuperar limite de Crédito conforme ID
+      operationId: recuperarUsingGET
+      produces:
+        - '*/*'
+        - application/json;charset=UTF-8
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/LimiteCreditoResponse'
+        '400':
+          description: Erro na requisição
+        '404':
+          description: Dados não encontrados
+      deprecated: false
+    put:
+      tags:
+        - Limites de Crédito
+      summary: alterar
+      description: Alterar um limite de crédito.
+      operationId: alterarUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+        - application/json;charset=UTF-8
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/LimiteCreditoRequest'
+      responses:
+        '200':
+          description: Entidade salva
+          schema:
+            $ref: '#/definitions/LimiteCreditoResponse'
+        '400':
+          description: Erro na requisição
+        '404':
+          description: Informação não encontrada
+      deprecated: false
+    delete:
+      tags:
+        - Limites de Crédito
+      summary: remover
+      description: Remover um limite de Crédito conforme ID
+      operationId: removerUsingDELETE
+      produces:
+        - '*/*'
+        - application/json;charset=UTF-8
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: string
+            enum:
+              - 100 CONTINUE
+              - 101 SWITCHING_PROTOCOLS
+              - 102 PROCESSING
+              - 103 CHECKPOINT
+              - 200 OK
+              - 201 CREATED
+              - 202 ACCEPTED
+              - 203 NON_AUTHORITATIVE_INFORMATION
+              - 204 NO_CONTENT
+              - 205 RESET_CONTENT
+              - 206 PARTIAL_CONTENT
+              - 207 MULTI_STATUS
+              - 208 ALREADY_REPORTED
+              - 226 IM_USED
+              - 300 MULTIPLE_CHOICES
+              - 301 MOVED_PERMANENTLY
+              - 302 FOUND
+              - 302 MOVED_TEMPORARILY
+              - 303 SEE_OTHER
+              - 304 NOT_MODIFIED
+              - 305 USE_PROXY
+              - 307 TEMPORARY_REDIRECT
+              - 308 PERMANENT_REDIRECT
+              - 400 BAD_REQUEST
+              - 401 UNAUTHORIZED
+              - 402 PAYMENT_REQUIRED
+              - 403 FORBIDDEN
+              - 404 NOT_FOUND
+              - 405 METHOD_NOT_ALLOWED
+              - 406 NOT_ACCEPTABLE
+              - 407 PROXY_AUTHENTICATION_REQUIRED
+              - 408 REQUEST_TIMEOUT
+              - 409 CONFLICT
+              - 410 GONE
+              - 411 LENGTH_REQUIRED
+              - 412 PRECONDITION_FAILED
+              - 413 PAYLOAD_TOO_LARGE
+              - 413 REQUEST_ENTITY_TOO_LARGE
+              - 414 URI_TOO_LONG
+              - 414 REQUEST_URI_TOO_LONG
+              - 415 UNSUPPORTED_MEDIA_TYPE
+              - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+              - 417 EXPECTATION_FAILED
+              - 418 I_AM_A_TEAPOT
+              - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+              - 420 METHOD_FAILURE
+              - 421 DESTINATION_LOCKED
+              - 422 UNPROCESSABLE_ENTITY
+              - 423 LOCKED
+              - 424 FAILED_DEPENDENCY
+              - 426 UPGRADE_REQUIRED
+              - 428 PRECONDITION_REQUIRED
+              - 429 TOO_MANY_REQUESTS
+              - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+              - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+              - 500 INTERNAL_SERVER_ERROR
+              - 501 NOT_IMPLEMENTED
+              - 502 BAD_GATEWAY
+              - 503 SERVICE_UNAVAILABLE
+              - 504 GATEWAY_TIMEOUT
+              - 505 HTTP_VERSION_NOT_SUPPORTED
+              - 506 VARIANT_ALSO_NEGOTIATES
+              - 507 INSUFFICIENT_STORAGE
+              - 508 LOOP_DETECTED
+              - 509 BANDWIDTH_LIMIT_EXCEEDED
+              - 510 NOT_EXTENDED
+              - 511 NETWORK_AUTHENTICATION_REQUIRED
+        '404':
+          description: Dados não encontrados
+        '422':
+          description: Erro de regras
+      deprecated: false
+definitions:
+  LimiteCreditoPersist:
+    type: object
+    required:
+      - limiteCredito
+      - nomeCliente
+      - risco
+    properties:
+      nomeCliente:
+        type: string
+        example: José da Silva
+        description: Nome do cliente
+      limiteCredito:
+        type: number
+        example: 12.3
+        description: Limite de Crédito
+      risco:
+        type: string
+        example: A
+        description: Risco de crédito
+        enum:
+          - A
+          - B
+          - C
+    title: LimiteCreditoPersist
+    description: LimiteCreditoPersist
+  LimiteCreditoRequest:
+    type: object
+    properties:
+      nomeCliente:
+        type: string
+        example: José da Silva
+        description: Nome do cliente
+      limiteCredito:
+        type: number
+        example: 12.3
+        description: Limite de Crédito
+      risco:
+        type: string
+        example: A
+        description: Risco de crédito
+        enum:
+          - A
+          - B
+          - C
+    title: LimiteCreditoRequest
+    description: LimiteCreditoRequest
+  LimiteCreditoResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: identificador do Limite
+      nomeCliente:
+        type: string
+        description: Nome do cliente
+      limiteCredito:
+        type: number
+        description: Limite de crédito
+      risco:
+        type: string
+        description: Risco do cliente
+        enum:
+          - A
+          - B
+          - C
+      juros:
+        type: number
+        description: Juros calculado
+    title: LimiteCreditoResponse
+    description: LimiteCreditoResponse
